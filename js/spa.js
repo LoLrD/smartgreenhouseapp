@@ -12,15 +12,17 @@ const SPARouter = async (page) => {
         case '#':
 
         case '#sensors':
-            SPANav('./views/sensors.html')
-            break;
+            await SPANav('./views/sensors.html')
+            SensorPageHandler()
+            break
         
         case '#relays':
-            SPANav('./views/relays.html')
-            break;
+            await SPANav('./views/relays.html')
+            RelayPageHandler()
+            break
     
         default:
-            break;
+            break
     }
 }
 

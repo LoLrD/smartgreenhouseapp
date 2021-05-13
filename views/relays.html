@@ -1,1 +1,126 @@
-re
+<ul class="collapsible">
+    <li>
+        <div class="collapsible-header">Relay 1</div>
+        <div class="collapsible-body">
+            <span>State: Enabled</span>
+            <br>
+            <a class="waves-effect waves-light btn disabled">Enable</a>
+            <a class="waves-effect waves-light btn">Disable</a>
+            <br>
+            <span>Timer: Disabled</span>
+            <br>
+            <a class="waves-effect waves-light btn modal-trigger" href="#timer-modal">Enable/Edit</a>
+            <a class="waves-effect waves-light btn disabled">Disable</a>
+            <br>
+            <span>Sensor: Disabled</span>
+            <br>
+            <a class="waves-effect waves-light btn modal-trigger" href="#sensor-modal">Enable/Edit</a>
+            <a class="waves-effect waves-light btn disabled">Disable</a>
+        </div>
+    </li>
+    <li>
+        <div class="collapsible-header">Relay 2</div>
+        <div class="collapsible-body">
+            <span>State: Enabled</span>
+            <br>
+            <a class="waves-effect waves-light btn disabled">Enable</a>
+            <a class="waves-effect waves-light btn">Disable</a>
+            <br>
+            <span>Timer: Disabled</span>
+            <br>
+            <a class="waves-effect waves-light btn modal-trigger" href="#timer-modal">Enable/Edit</a>
+            <a class="waves-effect waves-light btn disabled">Disable</a>
+            <br>
+            <span>Sensor: Disabled</span>
+            <br>
+            <a class="waves-effect waves-light btn modal-trigger" href="#sensor-modal">Enable/Edit</a>
+            <a class="waves-effect waves-light btn disabled">Disable</a>
+        </div>
+    </li>
+    <li>
+        <div class="collapsible-header">Relay 3</div>
+        <div class="collapsible-body">
+            <span>State: Enabled</span>
+            <br>
+            <a class="waves-effect waves-light btn disabled">Enable</a>
+            <a class="waves-effect waves-light btn">Disable</a>
+            <br>
+            <span>Timer: Disabled</span>
+            <br>
+            <a class="waves-effect waves-light btn modal-trigger" href="#timer-modal">Enable/Edit</a>
+            <a class="waves-effect waves-light btn disabled">Disable</a>
+            <br>
+            <span>Sensor: Disabled</span>
+            <br>
+            <a class="waves-effect waves-light btn modal-trigger" href="#sensor-modal">Enable/Edit</a>
+            <a class="waves-effect waves-light btn disabled">Disable</a>
+        </div>
+    </li>
+    <li>
+        <div class="collapsible-header">Relay 4</div>
+        <div class="collapsible-body">
+            <span>State: Enabled</span>
+            <br>
+            <a class="waves-effect waves-light btn disabled">Enable</a>
+            <a class="waves-effect waves-light btn">Disable</a>
+            <br>
+            <span>Timer: Disabled</span>
+            <br>
+            <a class="waves-effect waves-light btn modal-trigger" href="#timer-modal">Enable/Edit</a>
+            <a class="waves-effect waves-light btn disabled">Disable</a>
+            <br>
+            <span>Sensor: Disabled</span>
+            <br>
+            <a class="waves-effect waves-light btn modal-trigger" href="#sensor-modal">Enable/Edit</a>
+            <a class="waves-effect waves-light btn disabled">Disable</a>
+        </div>
+    </li>
+</ul>
+
+<div id="timer-modal" class="modal">
+    <div class="modal-content">
+        <h4>Timer settings</h4>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="period" type="number" class="validate">
+                <label for="period">Every ... s.</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="work" type="number" class="validate">
+                <label for="work">For ... s.</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+        <a class="waves-effect waves-green btn-flat">Enable/Edit</a>
+    </div>
+</div>
+
+<div id="sensor-modal" class="modal">
+    <div class="modal-content">
+        <h4>Sensor settings</h4>
+        <div class="row">
+            <div class="input-field col s12">
+                <select>
+                    <option value="0">Air temperature</option>
+                    <option value="1">Air humidity</option>
+                    <option value="2">Soil moisture</option>
+                </select>
+                <label>Sensor select</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="treshold" type="number" class="validate">
+                <label for="treshold">Treshold</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+        <a class="waves-effect waves-green btn-flat">Enable/Edit</a>
+    </div>
+</div>

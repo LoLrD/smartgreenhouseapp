@@ -1,4 +1,14 @@
-document.addEventListener('DOMContentLoaded', function() {
-    let elems = document.querySelectorAll('.sidenav');
-    let instances = M.Sidenav.init(elems);
+const SensorPageHandler = () => {
+    M.AutoInit();
+}
+
+const RelayPageHandler = () => {
+    M.AutoInit();
+}
+
+window.location.hash = '#sensors'
+window.dispatchEvent(new HashChangeEvent("hashchange"))
+
+document.addEventListener('DOMContentLoaded', function () {
+    M.AutoInit();
 });
