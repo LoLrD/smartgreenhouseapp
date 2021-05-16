@@ -1,4 +1,5 @@
 let client
+const sensorsList = ['temperature', 'humidity', 'moisture']
 
 const isClientAvailable = () => {
     if (client && client.connected) {
@@ -10,22 +11,68 @@ const isClientAvailable = () => {
 
 const subscribeSensors = () => {
     if (isClientAvailable()) {
-        sensorsChannels = ['temperature', 'humidity', 'moisture']
-        client.subscribe(sensorsChannels)
+        client.subscribe(sensorsList)
     }
 }
 
 const setSensor = (topic, value) => {
-    const element = document.querySelector(`#${topic}-text`)
+    if (sensorsList.includes(topic)) {
+        const element = document.querySelector(`#${topic}-text`)
 
-    if (element) {
-        element.textContent = value
+        if (element) {
+            element.textContent = value
+        }
     }
 }
 
 const getSensorsValue = () => {
     if (isClientAvailable()) {
         client.publish('sensors', '1')
+    }
+}
+
+const subscribeRelaysState = () => {
+    if (isClientAvailable()) {
+        for (let i = 1; i <= 4; i++) {
+            sensorsChannels = [`relay_state/${i}`, `relay_timer_state/${i}`, `relay_sensor_state/${i}`]
+            client.subscribe(sensorsChannels)
+        }
+    }
+}
+
+const showRelayState = (topic, value) => {
+    if (topic.includes('relay_state')) {
+        const relayNumber = topic.slice(-1)
+        const relayStateText = document.querySelector(`#relay-state-${relayNumber}`)
+        if (relayStateText) {
+            value = parseInt(value)
+            relayStateText.textContent = value ? 'Enable' : 'Disable'
+
+            const disableRelayButton = document.querySelector(`#relay-${relayNumber}-disable-button`)
+            const enableRelayButton = document.querySelector(`#relay-${relayNumber}-enable-button`)
+
+            if (value) {
+                disableRelayButton.classList.remove('disabled')
+                enableRelayButton.classList.add('disabled')
+            } else {
+                disableRelayButton.classList.add('disabled')
+                enableRelayButton.classList.remove('disabled')
+            }
+        }
+    }
+}
+
+const getRelayStates = () => {
+    if (isClientAvailable()) {
+        for (let i = 1; i <= 4; i++) {
+            client.publish(`relay/${i}`, '2')
+        }
+    }
+}
+
+const setRelayState = (relayNumber, state) => {
+    if (isClientAvailable()) {
+        client.publish(`relay/${relayNumber}`, state)
     }
 }
 
@@ -45,6 +92,24 @@ const SensorPageHandler = () => {
 
 const RelayPageHandler = () => {
     M.AutoInit()
+
+    getRelayStates()
+
+    for (let i = 1; i <= 4; i++) {
+        const enableButton = document.querySelector(`#relay-${i}-enable-button`)
+        enableButton.addEventListener('click', (e) => {
+            e.preventDefault()
+
+            setRelayState(i, '1')
+        })
+
+        const disableButton = document.querySelector(`#relay-${i}-disable-button`)
+        disableButton.addEventListener('click', (e) => {
+            e.preventDefault()
+
+            setRelayState(i, '0')
+        })
+    }
 }
 
 window.location.hash = '#sensors'
@@ -69,12 +134,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             subscribeSensors()
             getSensorsValue()
+
+            subscribeRelaysState()
+            getRelayStates()
         })
 
         client.on('message', function (topic, message) {
             message = message.toString()
 
             setSensor(topic, message)
+            showRelayState(topic, message)
         })
 
 
