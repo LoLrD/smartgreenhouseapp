@@ -1,4 +1,5 @@
 let client
+let selectedRelay
 const sensorsList = ['temperature', 'humidity', 'moisture']
 
 const isClientAvailable = () => {
@@ -60,12 +61,37 @@ const showRelayState = (topic, value) => {
             }
         }
     }
+
+    showRelayTimerState(topic, value)
+}
+
+const showRelayTimerState = (topic, value) => {
+    if (topic.includes('relay_timer_state')) {
+        const relayNumber = topic.slice(-1)
+        const relayTimerStateText = document.querySelector(`#relay-timer-state-${relayNumber}`)
+        if (relayTimerStateText) {
+            const isEnabled = parseInt(value.slice(0, 1))
+            const disableRelayTimerButton = document.querySelector(`#relay-timer-${relayNumber}-disable-button`)
+
+            if (isEnabled) {
+                value = value.split('/')
+                relayTimerStateText.textContent = `every ${value[1] / 1000} s. for ${value[2] / 1000} s.`
+
+                disableRelayTimerButton.classList.remove('disabled')
+            } else {
+                relayTimerStateText.textContent = 'Disable'
+
+                disableRelayTimerButton.classList.add('disabled')
+            }
+        }
+    }
 }
 
 const getRelayStates = () => {
     if (isClientAvailable()) {
         for (let i = 1; i <= 4; i++) {
             client.publish(`relay/${i}`, '2')
+            client.publish(`relay_timer/${i}`, '2')
         }
     }
 }
@@ -73,6 +99,21 @@ const getRelayStates = () => {
 const setRelayState = (relayNumber, state) => {
     if (isClientAvailable()) {
         client.publish(`relay/${relayNumber}`, state)
+    }
+}
+
+const setRelayTimerState = (relayNumber, state) => {
+    if (isClientAvailable()) {
+        if (state === '0') {
+            client.publish(`relay_timer/${relayNumber}`, state)
+        } else if (state === '1') {
+            const period = parseInt(document.querySelector('#period').value) * 1000
+            const work = parseInt(document.querySelector('#work').value) * 1000
+
+            client.publish(`relay_timer/${relayNumber}`, state)
+            client.publish(`relay_timer/${relayNumber}`, period.toString())
+            client.publish(`relay_timer/${relayNumber}`, work.toString())
+        }
     }
 }
 
@@ -93,23 +134,48 @@ const SensorPageHandler = () => {
 const RelayPageHandler = () => {
     M.AutoInit()
 
+    const timerModalEl = document.querySelector('#timer-modal')
+    const timerModal = M.Modal.init(timerModalEl);
+
     getRelayStates()
 
     for (let i = 1; i <= 4; i++) {
         const enableButton = document.querySelector(`#relay-${i}-enable-button`)
-        enableButton.addEventListener('click', (e) => {
+        enableButton.addEventListener('click', e => {
             e.preventDefault()
 
             setRelayState(i, '1')
         })
 
         const disableButton = document.querySelector(`#relay-${i}-disable-button`)
-        disableButton.addEventListener('click', (e) => {
+        disableButton.addEventListener('click', e => {
             e.preventDefault()
 
             setRelayState(i, '0')
         })
+
+        const disableTimerButton = document.querySelector(`#relay-timer-${i}-disable-button`)
+        disableTimerButton.addEventListener('click', e => {
+            e.preventDefault()
+
+            setRelayTimerState(i, '0')
+        })
     }
+
+    const openModalButtons = document.querySelectorAll('.relay-modal')
+    openModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            selectedRelay = button.dataset.relay
+        })
+    })
+
+    const enableTimerButton = document.querySelector('#enable-timer-button')
+    enableTimerButton.addEventListener('click', e => {
+        e.preventDefault()
+
+        setRelayTimerState(selectedRelay, '1')
+        timerModal.close()
+    })
 }
 
 window.location.hash = '#sensors'
