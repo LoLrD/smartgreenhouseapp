@@ -63,6 +63,7 @@ const showRelayState = (topic, value) => {
     }
 
     showRelayTimerState(topic, value)
+    showRelaySensorState(topic, value)
 }
 
 const showRelayTimerState = (topic, value) => {
@@ -87,11 +88,43 @@ const showRelayTimerState = (topic, value) => {
     }
 }
 
+const showRelaySensorState = (topic, value) => {
+    if (topic.includes('relay_sensor_state')) {
+        const relayNumber = topic.slice(-1)
+        const relaySensorStateText = document.querySelector(`#relay-sensor-state-${relayNumber}`)
+        if (relaySensorStateText) {
+            const isEnabled = parseInt(value.slice(0, 1))
+            const disableRelaySensorButton = document.querySelector(`#relay-sensor-${relayNumber}-disable-button`)
+
+            if (isEnabled) {
+                value = value.split('/')
+                let sensor
+                if (value[1] === '0') {
+                    sensor = 'Air temperature'
+                } else if (value[1] === '1') {
+                    sensor = 'Air humidity'
+                } else if (value[1] === '2') {
+                    sensor = 'Soil moisture'
+                }
+
+                relaySensorStateText.textContent = `${sensor}, treshold: ${value[2]}`
+
+                disableRelaySensorButton.classList.remove('disabled')
+            } else {
+                relaySensorStateText.textContent = 'Disable'
+
+                disableRelaySensorButton.classList.add('disabled')
+            }
+        }
+    }
+}
+
 const getRelayStates = () => {
     if (isClientAvailable()) {
         for (let i = 1; i <= 4; i++) {
             client.publish(`relay/${i}`, '2')
             client.publish(`relay_timer/${i}`, '2')
+            client.publish(`relay_sensor/${i}`, '2')
         }
     }
 }
@@ -117,6 +150,21 @@ const setRelayTimerState = (relayNumber, state) => {
     }
 }
 
+const setRelaySensorState = (relayNumber, state) => {
+    if (isClientAvailable()) {
+        if (state === '0') {
+            client.publish(`relay_sensor/${relayNumber}`, state)
+        } else if (state === '1') {
+            const sensor = document.querySelector('#sensor').value
+            const treshold = document.querySelector('#treshold').value
+
+            client.publish(`relay_sensor/${relayNumber}`, state)
+            client.publish(`relay_sensor/${relayNumber}`, sensor)
+            client.publish(`relay_sensor/${relayNumber}`, treshold)
+        }
+    }
+}
+
 const SensorPageHandler = () => {
     M.AutoInit()
     getSensorsValue()
@@ -136,6 +184,9 @@ const RelayPageHandler = () => {
 
     const timerModalEl = document.querySelector('#timer-modal')
     const timerModal = M.Modal.init(timerModalEl);
+
+    const sensorModalEl = document.querySelector('#sensor-modal')
+    const sensorModal = M.Modal.init(sensorModalEl);
 
     getRelayStates()
 
@@ -160,6 +211,13 @@ const RelayPageHandler = () => {
 
             setRelayTimerState(i, '0')
         })
+
+        const disableSensorButton = document.querySelector(`#relay-sensor-${i}-disable-button`)
+        disableSensorButton.addEventListener('click', e => {
+            e.preventDefault()
+
+            setRelaySensorState(i, '0')
+        })
     }
 
     const openModalButtons = document.querySelectorAll('.relay-modal')
@@ -175,6 +233,14 @@ const RelayPageHandler = () => {
 
         setRelayTimerState(selectedRelay, '1')
         timerModal.close()
+    })
+
+    const enableSensorButton = document.querySelector('#enable-sensor-button')
+    enableSensorButton.addEventListener('click', e => {
+        e.preventDefault()
+
+        setRelaySensorState(selectedRelay, '1')
+        sensorModal.close()
     })
 }
 

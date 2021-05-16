@@ -13,11 +13,11 @@
                 data-relay="1">Enable/Edit</a>
             <a class="waves-effect waves-light btn disabled" id="relay-timer-1-disable-button">Disable</a>
             <br>
-            <span>Sensor: Disabled</span>
+            <span>Sensor: </span> <span id="relay-sensor-state-1">Disabled</span>
             <br>
             <a class="waves-effect waves-light btn modal-trigger relay-modal" href="#sensor-modal" 
                 data-relay="1">Enable/Edit</a>
-            <a class="waves-effect waves-light btn disabled">Disable</a>
+            <a class="waves-effect waves-light btn disabled" id="relay-sensor-1-disable-button">Disable</a>
         </div>
     </li>
     <li>
@@ -34,11 +34,11 @@
                 data-relay="2">Enable/Edit</a>
             <a class="waves-effect waves-light btn disabled" id="relay-timer-2-disable-button">Disable</a>
             <br>
-            <span>Sensor: Disabled</span>
+            <span>Sensor: </span> <span id="relay-sensor-state-2">Disabled</span>
             <br>
             <a class="waves-effect waves-light btn modal-trigger relay-modal" href="#sensor-modal" 
                 data-relay="2">Enable/Edit</a>
-            <a class="waves-effect waves-light btn disabled">Disable</a>
+            <a class="waves-effect waves-light btn disabled" id="relay-sensor-2-disable-button">Disable</a>
         </div>
     </li>
     <li>
@@ -55,11 +55,11 @@
                 data-relay="3">Enable/Edit</a>
             <a class="waves-effect waves-light btn disabled" id="relay-timer-3-disable-button">Disable</a>
             <br>
-            <span>Sensor: Disabled</span>
+            <span>Sensor: </span> <span id="relay-sensor-state-3">Disabled</span>
             <br>
             <a class="waves-effect waves-light btn modal-trigger relay-modal" href="#sensor-modal" 
                 data-relay="3">Enable/Edit</a>
-            <a class="waves-effect waves-light btn disabled">Disable</a>
+            <a class="waves-effect waves-light btn disabled" id="relay-sensor-3-disable-button">Disable</a>
         </div>
     </li>
     <li>
@@ -76,11 +76,11 @@
                 data-relay="4">Enable/Edit</a>
             <a class="waves-effect waves-light btn disabled" id="relay-timer-4-disable-button">Disable</a>
             <br>
-            <span>Sensor: Disabled</span>
+            <span>Sensor: </span> <span id="relay-sensor-state-4">Disabled</span>
             <br>
             <a class="waves-effect waves-light btn modal-trigger relay-modal" href="#sensor-modal" 
                 data-relay="4">Enable/Edit</a>
-            <a class="waves-effect waves-light btn disabled">Disable</a>
+            <a class="waves-effect waves-light btn disabled" id="relay-sensor-4-disable-button">Disable</a>
         </div>
     </li>
 </ul>
@@ -107,12 +107,12 @@
     </div>
 </div>
 
-<div id="sensor-modal" class="modal">
+<div id="sensor-modal" class="modal no-autoinit">
     <div class="modal-content">
         <h4>Sensor settings</h4>
         <div class="row">
             <div class="input-field col s12">
-                <select>
+                <select id="sensor">
                     <option value="0">Air temperature</option>
                     <option value="1">Air humidity</option>
                     <option value="2">Soil moisture</option>
@@ -129,6 +129,6 @@
     </div>
     <div class="modal-footer">
         <a class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-        <a class="waves-effect waves-green btn-flat">Enable/Edit</a>
+        <a class="waves-effect waves-green btn-flat" id="enable-sensor-button">Enable/Edit</a>
     </div>
 </div>
