@@ -1,5 +1,5 @@
-var cacheName = 'smartgreenhouse-pwa';
-var filesToCache = [
+const cacheName = 'smartgreenhouse-pwa';
+const filesToCache = [
     '/',
     '/index.html',
     '/css/styles.css',
