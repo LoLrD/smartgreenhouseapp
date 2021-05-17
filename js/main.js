@@ -2,6 +2,15 @@ let client
 let selectedRelay
 const sensorsList = ['temperature', 'humidity', 'moisture']
 
+window.onload = () => {
+    'use strict';
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('./sw.js');
+    }
+}
+
 const isClientAvailable = () => {
     if (client && client.connected) {
         return true
