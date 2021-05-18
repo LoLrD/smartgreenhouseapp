@@ -2,30 +2,17 @@ let client
 let selectedRelay
 const sensorsList = ['temperature', 'humidity', 'moisture']
 
-window.onload = () => {
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function (registrations) {
-
-            for (let registration of registrations) {
-
-                registration.unregister()
-
-            }
-        }).catch(function (err) {
-
-            console.log('Service Worker registration failed: ', err);
-
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+        .register("sw.js")
+        .then(function (registration) {
+            console.log("success load");
+        })
+        .catch(function (err) {
+            console.log(err);
         });
-
-
-        self.addEventListener("load", async () => {
-            const container = navigator.serviceWorker;
-            if (container.controller === null) {
-                const reg = await container.register("./sw.js");
-            }
-        });
-    }
 }
+
 
 const isClientAvailable = () => {
     if (client && client.connected) {

@@ -1,11 +1,7 @@
 {
     "start_url": "/",
     "name": "SmartGreenHouse",
-    "short_name": "SmartGreen",
-    "lang": "en-US",
     "display": "standalone",
-    "background_color": "white",
-    "theme_color": "white",
     "icons": [
         {
             "src": "img/icons/android-launchericon-512-512.png",
