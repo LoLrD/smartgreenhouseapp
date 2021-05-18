@@ -1,10 +1,10 @@
 {
-    "start_url": "https://smartgreenhouseapp.online/",
+    "start_url": "/",
     "name": "SmartGreenHouse",
     "short_name": "SmartGreen",
     "lang": "en-US",
     "display": "standalone",
-    "scope": "https://smartgreenhouseapp.online/",
+    "scope": "/",
     "background_color": "white",
     "theme_color": "white",
     "icons": [
