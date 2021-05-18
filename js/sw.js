@@ -16,9 +16,7 @@ function hndlEventInstall(evt) {
         const cacheStat = await caches.open(CACHE_STATIC);
         await Promise.all(
             files.map(function (url) {
-                return cacheStat.add(url).catch(function (reason) {
-                    console.log(`'${url}' failed: ${String(reason)}`);
-                });
+                return cacheStat.add(url);
             })
         );
     }
