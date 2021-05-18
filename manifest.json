@@ -4,7 +4,6 @@
     "short_name": "SmartGreen",
     "lang": "en-US",
     "display": "standalone",
-    "scope": "/",
     "background_color": "white",
     "theme_color": "white",
     "icons": [

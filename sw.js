@@ -9,7 +9,6 @@ function hndlEventInstall(evt) {
         const files = [
             './',
             './manifest.json',
-            './icon.png',
             './index.html',
             './sw.js',
         ];
