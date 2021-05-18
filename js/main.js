@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const login = document.querySelector('#username').value
         const password = document.querySelector('#password').value
 
-        client = mqtt.connect('wss://smartgreenhouseapp.online:443', { username: login, password: password, reconnectPeriod: 0 })
+        client = mqtt.connect('wss://smartgreenhouseapp.online:8080', { username: login, password: password, reconnectPeriod: 0 })
 
         client.on('connect', function () {
             instance.close()
