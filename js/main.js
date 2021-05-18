@@ -3,11 +3,13 @@ let selectedRelay
 const sensorsList = ['temperature', 'humidity', 'moisture']
 
 window.onload = () => {
-    'use strict';
-
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-            .register('/smartgreenhouseapp/sw.js', { scope: '/smartgreenhouseapp/' });
+    if ("serviceWorker" in navigator) {
+        self.addEventListener("load", async () => {
+            const container = navigator.serviceWorker;
+            if (container.controller === null) {
+                const reg = await container.register("sw.js");
+            }
+        });
     }
 }
 
