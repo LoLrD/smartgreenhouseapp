@@ -4,6 +4,20 @@ const sensorsList = ['temperature', 'humidity', 'moisture']
 
 window.onload = () => {
     if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function (registrations) {
+
+            for (let registration of registrations) {
+
+                registration.unregister()
+
+            }
+        }).catch(function (err) {
+
+            console.log('Service Worker registration failed: ', err);
+
+        });
+
+
         self.addEventListener("load", async () => {
             const container = navigator.serviceWorker;
             if (container.controller === null) {
