@@ -21,7 +21,7 @@ window.onload = () => {
         self.addEventListener("load", async () => {
             const container = navigator.serviceWorker;
             if (container.controller === null) {
-                const reg = await container.register("/smartgreenhouseapp/sw.js", { scope: '/smartgreenhouseapp/' });
+                const reg = await container.register("/smartgreenhouseapp/sw.js");
             }
         });
     }

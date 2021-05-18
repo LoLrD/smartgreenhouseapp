@@ -4,7 +4,7 @@
     "short_name": "SmartGreen",
     "lang": "en-US",
     "display": "standalone",
-    "scope": "/",
+    "scope": "/smartgreenhouseapp/",
     "background_color": "white",
     "theme_color": "white",
     "icons": [
