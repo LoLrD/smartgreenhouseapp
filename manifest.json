@@ -6,6 +6,7 @@
     "description": "App for control to the NodeMCU over mqtt",
     "orientation": "any",
     "display": "standalone",
+    "theme_color": "#4db6ac",
     "icons": [
         {
             "src": "img/icons/android-launchericon-512-512.png",
